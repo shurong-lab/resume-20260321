@@ -1,175 +1,270 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>李書蓉 的個人履歷</title>
-    <style>
-        /* CSS 樣式區域 */
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            line-height: 1.6; 
-            color: #333; 
-            max-width: 800px; 
-            margin: 0 auto; 
-            padding: 30px 20px; 
-            transition: background-color 0.3s, color 0.3s; 
-        }
-        
-        /* 深色模式樣式 */
-        .dark-mode { 
-            background-color: #222; 
-            color: #f4f4f4; 
-        }
-        
-        header { 
-            text-align: center; 
-            border-bottom: 2px solid #0056b3; 
-            padding-bottom: 20px; 
-            margin-bottom: 30px; 
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>李書蓉 - 個人履歷</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    :root {
+        --bg-main: #121212;
+        --bg-card: #1e1e1e;
+        --bg-sidebar: #242b33;
+        --accent-color: #38b2ac;
+        --text-primary: #f7fafc;
+        --text-secondary: #a0aec0;
+        --bar-bg: #4a5568;
+    }
 
-        /* 照片樣式 */
-        .profile-pic {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%; /* 裁切成圓形 */
-            object-fit: cover; /* 確保照片比例不變形 */
-            margin-bottom: 15px;
-            border: 4px solid #0056b3;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
+    body {
+        font-family: 'Segoe UI', 'Microsoft JhengHei', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg-main);
+        display: flex;
+        justify-content: center;
+        padding: 40px;
+        margin: 0;
+        color: var(--text-primary);
+        line-height: 1.6;
+    }
 
-        .dark-mode .profile-pic {
-            border-color: #4da3ff;
-            box-shadow: 0 4px 8px rgba(255,255,255,0.1);
+    .resume-wrapper {
+        display: flex;
+        width: 100%;
+        max-width: 950px;
+        background-color: var(--bg-card);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    /* ================= 左側設計 ================= */
+    .left {
+        width: 35%;
+        background-color: var(--bg-sidebar);
+        padding: 50px 35px;
+        box-sizing: border-box;
+    }
+
+    .profile-pic {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 25px;
+        border: 4px solid var(--bg-card);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .name {
+        font-size: 2.4em;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin-bottom: 5px;
+        letter-spacing: 2px;
+    }
+
+    .title {
+        font-size: 1.1em;
+        color: var(--accent-color);
+        margin-bottom: 30px;
+        font-weight: 600;
+    }
+
+    /* 聯絡資訊 */
+    .contact-info {
+        margin-bottom: 40px;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+        font-size: 0.9em;
+        color: var(--text-secondary);
+    }
+
+    .contact-item i {
+        width: 20px;
+        color: var(--accent-color);
+        margin-right: 10px;
+        font-size: 1.1em;
+    }
+
+    .section-title-left {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: var(--text-primary);
+        margin-bottom: 20px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--accent-color);
+    }
+
+    .skill {
+        margin-bottom: 20px;
+        font-size: 0.95em;
+        font-weight: 500;
+        color: var(--text-primary);
+    }
+
+    .bar {
+        width: 100%;
+        height: 6px;
+        background-color: var(--bar-bg);
+        border-radius: 4px;
+        margin-top: 10px;
+        overflow: hidden;
+    }
+
+    .level {
+        height: 100%;
+        background-color: var(--accent-color);
+        border-radius: 4px;
+        transition: width 1s ease-in-out;
+    }
+
+    /* ================= 右側設計 ================= */
+    .right {
+        width: 65%;
+        padding: 50px 50px;
+        box-sizing: border-box;
+    }
+
+    .card {
+        margin-bottom: 45px;
+    }
+
+    .section-title {
+        background-color: var(--accent-color);
+        color: #121212;
+        display: inline-block;
+        padding: 6px 18px;
+        font-size: 1.2em;
+        font-weight: 900;
+        margin-bottom: 25px;
+        border-radius: 4px;
+        letter-spacing: 1px;
+    }
+
+    .experience-item {
+        margin-bottom: 25px;
+        position: relative;
+        padding-left: 20px;
+        border-left: 2px solid var(--bar-bg);
+    }
+
+    .experience-item::before {
+        content: '';
+        position: absolute;
+        left: -6px;
+        top: 6px;
+        width: 10px;
+        height: 10px;
+        background-color: var(--accent-color);
+        border-radius: 50%;
+    }
+
+    .card-title {
+        font-size: 1.15em;
+        font-weight: bold;
+        color: var(--text-primary);
+    }
+
+    .card-date {
+        font-size: 0.9em;
+        color: var(--accent-color);
+        margin-top: 4px;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    p {
+        color: var(--text-secondary);
+        margin: 0;
+        font-size: 0.95em;
+        text-align: justify;
+    }
+
+    /* RWD 手機版適應 */
+    @media (max-width: 768px) {
+        .resume-wrapper {
+            flex-direction: column;
         }
-        
-        h1 { margin-bottom: 5px; letter-spacing: 2px;}
-        
-        .contact-info { 
-            font-size: 1.1em; 
-            color: #666; 
+        .left, .right {
+            width: 100%;
+            padding: 30px;
         }
-        .dark-mode .contact-info { color: #aaa; }
-        
-        section { margin-bottom: 30px; }
-        
-        h2 { 
-            color: #0056b3; 
-            border-left: 4px solid #0056b3; 
-            padding-left: 12px; 
-            margin-bottom: 15px;
-        }
-        .dark-mode h2 { 
-            color: #4da3ff; 
-            border-left-color: #4da3ff; 
-        }
-        
-        .item { margin-bottom: 20px; }
-        .item-title { font-weight: bold; font-size: 1.1em;}
-        .item-date { font-size: 0.9em; color: #777; font-style: italic; }
-        .dark-mode .item-date { color: #bbb; }
-        
-        ul { 
-            list-style-type: square; 
-            padding-left: 20px; 
-            margin-top: 8px;
-        }
-        li { margin-bottom: 5px; }
-        
-        /* 按鈕樣式 */
-        .theme-btn { 
-            background-color: #0056b3; 
-            color: white; 
-            border: none; 
-            padding: 10px 15px; 
-            cursor: pointer; 
-            border-radius: 5px; 
-            float: right; 
-            font-weight: bold;
-        }
-        .theme-btn:hover { background-color: #004494; }
-        .dark-mode .theme-btn { 
-            background-color: #4da3ff; 
-            color: #222; 
-        }
-        .dark-mode .theme-btn:hover { background-color: #3388dd; }
-        
-        /* 清除浮動 */
-        .clearfix::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
 
-    <div class="clearfix">
-        <button class="theme-btn" onclick="toggleTheme()">切換深色/淺色模式</button>
+<div class="resume-wrapper">
+    <div class="left">
+        <img src="images/IMG_4373.JPEG" class="profile-pic" alt="李書蓉">
+
+        <div class="name">李書蓉</div>
+        <div class="title">亞洲大學 學生</div>
+
+        <div class="contact-info">
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>台中市霧峰區</span>
+            </div>
+        </div>
+
+        <div class="section-title-left">核心技能</div>
+
+        <div class="skill">
+            英語溝通與閱讀能力
+            <div class="bar"><div class="level" style="width:75%"></div></div>
+        </div>
+
+        <div class="skill">
+            團隊合作與活動企劃
+            <div class="bar"><div class="level" style="width:85%"></div></div>
+        </div>
+
+        <div class="skill">
+            跨領域學習能力
+            <div class="bar"><div class="level" style="width:90%"></div></div>
+        </div>
     </div>
 
-    <header>
-        <img src="images/IMG_4373.JPEG" alt="Mochi 的個人照片" class="profile-pic">
-        <h1>李書蓉</h1>
-        <div class="contact-info">
-            亞洲大學 | 一年級<br>
-            學號：AU114018042<br>
+    <div class="right">
+        <div class="card">
+            <div class="section-title">個人簡介</div>
+            <p>
+                具備強烈求知慾的大學生，對語言學、語音學具高度熱忱。積極探索語言治療與聽力學領域，熟悉基礎語音科學與 ICF 架構。期許能持續透過學術專案與實務參訪，將理論與臨床應用結合，培養解決問題與跨領域溝通的專業能力。
+            </p>
         </div>
-    </header>
 
-    <section>
-        <h2>個人簡介</h2>
-        <p>對語言學及語音學充滿熱忱，並積極探索語言治療與聽力學領域。喜歡透過實地參訪與學術活動擴充視野，具備團隊合作精神，並持續精進英語能力。</p>
-    </section>
+        <div class="card">
+            <div class="section-title">實務經驗與專案</div>
 
-    <section>
-        <h2>學歷</h2>
-        <div class="item">
-            <span class="item-title">亞洲大學</span>
-            <span class="item-date"> | 目前就讀</span>
-            <ul>
-                <li>積極參與校內外學術論壇與各項團隊活動。</li>
-            </ul>
+            <div class="experience-item">
+                <div class="card-title">營隊活動企劃與執行</div>
+                <div class="card-date">2026年2月</div>
+                <p>針對高中生設計互動式破冰遊戲與小隊呼，成功帶動現場氣氛，並於過程中深化團隊協作與臨場應變能力。</p>
+            </div>
+
+            <div class="experience-item">
+                <div class="card-title"> 科林助聽器門市參訪</div>
+                <div class="card-date">2026年1月</div>
+                <p>實地考察聽力學的臨床實務應用，與專業人員交流聽力評估及助聽器驗配流程，確立對聽語專業發展的志向。</p>
+            </div>
         </div>
-    </section>
 
-    <section>
-        <h2>活動與參訪經驗</h2>
-        <div class="item">
-            <span class="item-title">團隊營隊活動 (第二小隊)</span>
-            <span class="item-date"> | 2026年2月</span>
-            <ul>
-                <li>參與團隊建設與破冰活動，培養團隊合作與溝通能力。</li>
-            </ul>
+        <div class="card">
+            <div class="section-title">教育背景</div>
+            <div class="experience-item">
+                <div class="card-title">亞洲大學</div>
+                <div class="card-date">目前就讀</div>
+                <p>積極參與學術討論，於課餘時間自主進修英語能力及解剖學相關知識。</p>
+            </div>
         </div>
-        <div class="item">
-            <span class="item-title">科林助聽器門市參訪</span>
-            <span class="item-date"> | 2026年1月</span>
-            <ul>
-                <li>實地了解聽力學實務應用與聽損者需求，增進對聽力照護的初步認識。</li>
-            </ul>
-        </div>
-    </section>
 
-    <section>
-        <h2>技能與興趣</h2>
-        <ul>
-            <li><strong>專業興趣：</strong> 語言治療、聽力學、語音學基礎探討。</li>
-            <li><strong>語言能力：</strong> 持續學習與精進英語能力。</li>
-            <li><strong>休閒嗜好：</strong> 喜歡聆聽中韓文的歌曲。</li>
-        </ul>
-    </section>
-
-    <script>
-        // 切換深色與淺色模式的函式
-        function toggleTheme() {
-            // 在 body 標籤上切換 'dark-mode' 這個 class
-            document.body.classList.toggle('dark-mode');
-        }
-    </script>
+    </div>
+</div>
 
 </body>
 </html>
