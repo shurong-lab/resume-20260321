@@ -55,6 +55,10 @@
         transition: transform 0.3s ease;
     }
 
+    .music-player-widget:hover {
+        transform: translateY(-5px);
+    }
+
     .music-player-widget p {
         margin: 0 0 8px 0;
         font-size: 0.85em;
@@ -108,7 +112,7 @@
 
 <div class="music-player-widget">
     <p><i class="fas fa-headphones"></i> 專屬背景音樂 (R&B)</p>
-    <audio id="bgMusic" controls loop autoplay>
+    <audio id="bgMusic" controls loop autoplay muted>
         <source src="music.mp3" type="audio/mpeg">
         您的瀏覽器不支援音訊。
     </audio>
@@ -169,32 +173,36 @@
 <script>
     const music = document.getElementById('bgMusic');
 
-    // 當使用者點擊頁面任何地方，立即強制撥放音樂
-    function forcePlay() {
-        if (music.paused) {
-            music.play().then(() => {
-                console.log("自動撥放成功！");
-                // 移除監聽器，避免重複執行
-                document.removeEventListener('click', forcePlay);
-                document.removeEventListener('touchstart', forcePlay);
-                document.removeEventListener('scroll', forcePlay);
-            }).catch(error => {
-                console.log("撥放失敗，等待使用者互動：", error);
-            });
+    // 1. 頁面載入時，嘗試靜音播放 (這在 99% 的情況下都會成功自動跑)
+    window.addEventListener('load', () => {
+        music.play().catch(e => console.log("靜音自動播放失敗:", e));
+    });
+
+    // 2. 當使用者有任何動作（點擊、滑動、觸摸）時，立刻「取消靜音」並播放
+    function unlockAudio() {
+        if (music.muted) {
+            music.muted = false;  // 取消靜音
+            music.volume = 0.6;   // 設定舒適音量
+            music.play();
+            console.log("音訊已解鎖並開始播放聲音");
+            
+            // 成功解鎖後，移除所有監聽器
+            removeInteractions();
         }
     }
 
-    // 監聽點擊、觸摸、捲動這三個最常見的互動行為
-    document.addEventListener('click', forcePlay);
-    document.addEventListener('touchstart', forcePlay);
-    document.addEventListener('scroll', forcePlay);
-
-    // 嘗試在載入時直接撥放 (部分瀏覽器若先前有點過該網域可能會成功)
-    window.onload = function() {
-        music.play().catch(() => {
-            console.log("瀏覽器攔截自動撥放，等待使用者互動點擊後開啟音樂...");
-        });
+    function removeInteractions() {
+        document.removeEventListener('click', unlockAudio);
+        document.removeEventListener('touchstart', unlockAudio);
+        document.removeEventListener('scroll', unlockAudio);
+        document.removeEventListener('mousemove', unlockAudio);
     }
+
+    // 監聽所有可能的互動行為
+    document.addEventListener('click', unlockAudio);
+    document.addEventListener('touchstart', unlockAudio);
+    document.addEventListener('scroll', unlockAudio);
+    document.addEventListener('mousemove', unlockAudio); // 滑鼠移動也能解鎖
 </script>
 
 </body>
