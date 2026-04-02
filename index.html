@@ -55,10 +55,6 @@
         transition: transform 0.3s ease;
     }
 
-    .music-player-widget:hover {
-        transform: translateY(-5px);
-    }
-
     .music-player-widget p {
         margin: 0 0 8px 0;
         font-size: 0.85em;
@@ -66,7 +62,6 @@
         color: var(--accent-color);
     }
 
-    /* 音樂出處樣式 (新增) */
     .music-credit {
         font-size: 10px;
         color: var(--text-secondary);
@@ -113,7 +108,7 @@
 
 <div class="music-player-widget">
     <p><i class="fas fa-headphones"></i> 專屬背景音樂 (R&B)</p>
-    <audio controls loop>
+    <audio id="bgMusic" controls loop autoplay>
         <source src="music.mp3" type="audio/mpeg">
         您的瀏覽器不支援音訊。
     </audio>
@@ -171,7 +166,36 @@
     </div>
 </div>
 
-</body>
-</html>
+<script>
+    const music = document.getElementById('bgMusic');
+
+    // 當使用者點擊頁面任何地方，立即強制撥放音樂
+    function forcePlay() {
+        if (music.paused) {
+            music.play().then(() => {
+                console.log("自動撥放成功！");
+                // 移除監聽器，避免重複執行
+                document.removeEventListener('click', forcePlay);
+                document.removeEventListener('touchstart', forcePlay);
+                document.removeEventListener('scroll', forcePlay);
+            }).catch(error => {
+                console.log("撥放失敗，等待使用者互動：", error);
+            });
+        }
+    }
+
+    // 監聽點擊、觸摸、捲動這三個最常見的互動行為
+    document.addEventListener('click', forcePlay);
+    document.addEventListener('touchstart', forcePlay);
+    document.addEventListener('scroll', forcePlay);
+
+    // 嘗試在載入時直接撥放 (部分瀏覽器若先前有點過該網域可能會成功)
+    window.onload = function() {
+        music.play().catch(() => {
+            console.log("瀏覽器攔截自動撥放，等待使用者互動點擊後開啟音樂...");
+        });
+    }
+</script>
+
 </body>
 </html>
